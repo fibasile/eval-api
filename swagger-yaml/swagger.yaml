@@ -1,10 +1,9 @@
 ---
 swagger: "2.0"
 info:
-  description: "This is an example of using OAuth2 Password Flow in a specification\
-    \ to describe security to your API."
+  description: "This is a backoffice for the platform used to run Academany"
   version: "1.0.0"
-  title: "Sample Password Flow OAuth2 Project"
+  title: "Academany Management Platform"
 host: "virtserver.swaggerhub.com"
 basePath: "/fibasile/nueval/1.0.0"
 schemes:
@@ -14,15 +13,23 @@ security:
   - "read"
   - "write"
 paths:
-  /example:
+  /courses:
     get:
-      summary: "Server example operation"
-      description: "This is an example opeartion to show how security is applied to\
-        \ the call."
+      summary: "List courses on the platform"
+      description: "This method returns an array of Course objects"
       parameters: []
       responses:
         200:
           description: "OK"
+    post:
+      summary: "Create a new course on the platform"
+      description: "A new Course is created based on the provided parameters"
+      parameters: []
+      responses:
+        200:
+          description: "OK"
+        501:
+          description: "Missing a key parameter"
   /ping:
     get:
       summary: "Server heartbeat operation"
@@ -36,7 +43,7 @@ paths:
 securityDefinitions:
   password:
     type: "oauth2"
-    tokenUrl: "http://example.com/oauth/token"
+    tokenUrl: "http://api.academany.org/oauth/token"
     flow: "password"
     scopes:
       write: "allows modifying resources"
