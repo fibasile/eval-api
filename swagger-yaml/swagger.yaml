@@ -49,21 +49,6 @@ paths:
           description: "OK"
         501:
           description: "Missing a key parameter"
-  /courses/{course_id}:
-    get:
-      summary: "Read a course by ID"
-      description: "A dictionary containing the course information is returned"
-      parameters:
-      - name: "course_id"
-        in: "path"
-        description: "Course ID"
-        required: true
-        type: "integer"
-      responses:
-        200:
-          description: "OK"
-        404:
-          description: "Course not found"
   /ping:
     get:
       tags:
