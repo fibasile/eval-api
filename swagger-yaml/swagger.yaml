@@ -100,6 +100,47 @@ paths:
       responses:
         200:
           description: "OK"
+  /courses/{id}/supernodes:
+    get:
+      tags:
+      - "courses"
+      summary: "List supernodes defined for a course"
+      description: "This method returns an array of Supernode objects"
+      operationId: "getCourseSupernodes"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Course ID"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/supernode"
+    post:
+      tags:
+      - "courses"
+      summary: "Create a new supernode for a course"
+      description: "This method adds a supernode"
+      operationId: "addSupernodeToCourse"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Course ID"
+        required: true
+        type: "integer"
+      - in: "body"
+        name: "supernode"
+        description: "Supernode's properties"
+        required: false
+        schema:
+          $ref: "#/definitions/supernode"
+      responses:
+        200:
+          description: "OK"
   /courses/{id}/labs:
     get:
       tags:
@@ -293,7 +334,7 @@ paths:
     delete:
       tags:
       - "courses"
-      summary: "Delete a stduent by ID"
+      summary: "Delete a student by ID"
       description: "This method removes a Student object, along with all the related\
         \ objects (reviews, feedback, progress)"
       operationId: "deleteCourseStudent"
@@ -306,6 +347,102 @@ paths:
       - name: "student_id"
         in: "path"
         description: "Student ID"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "OK"
+  /courses/{id}/labs/{lab_id}/instructors:
+    post:
+      tags:
+      - "courses"
+      summary: "Create a new instructor in a course for a lab"
+      description: "This method creates a Instructor object"
+      operationId: "createCourseInstructor"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Course ID"
+        required: true
+        type: "integer"
+      - name: "lab_id"
+        in: "path"
+        description: "Lab ID"
+        required: true
+        type: "integer"
+      - in: "body"
+        name: "instructor"
+        description: "Instructor properties"
+        required: true
+        schema:
+          $ref: "#/definitions/instructor"
+      responses:
+        200:
+          description: "OK"
+  /courses/{id}/instructors/{instructor_id}:
+    get:
+      tags:
+      - "courses"
+      summary: "Read an instructor by ID"
+      description: "This method returns a Student object"
+      operationId: "getCourseInstructor"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Course ID"
+        required: true
+        type: "integer"
+      - name: "instructor_id"
+        in: "path"
+        description: "Instructor ID"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/instructor"
+    post:
+      tags:
+      - "courses"
+      summary: "Update an instructor by ID"
+      description: "This method allows to update a Student object"
+      operationId: "updateCourseInstructor"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Course ID"
+        required: true
+        type: "integer"
+      - name: "instructor_id"
+        in: "path"
+        description: "Instructor ID"
+        required: true
+        type: "integer"
+      - in: "body"
+        name: "instructor"
+        required: true
+        schema:
+          $ref: "#/definitions/instructor"
+      responses:
+        200:
+          description: "OK"
+    delete:
+      tags:
+      - "courses"
+      summary: "Delete an instructor by ID"
+      description: "This method removes a instructor object, along with all the related\
+        \ objects (reviews, feedback, progress)"
+      operationId: "deleteCourseInstructor"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Course ID"
+        required: true
+        type: "integer"
+      - name: "instructor_id"
+        in: "path"
+        description: "Instructor ID"
         required: true
         type: "integer"
       responses:
@@ -367,7 +504,7 @@ definitions:
         type: "array"
         items:
           $ref: "#/definitions/student"
-  student:
+  user:
     properties:
       id:
         type: "integer"
@@ -377,7 +514,37 @@ definitions:
         type: "string"
       email:
         type: "string"
+  student:
+    properties:
+      id:
+        type: "integer"
+      course_id:
+        type: "integer"
+      user_id:
+        type: "integer"
       student_id:
         type: "string"
       lab_id:
         type: "integer"
+  instructor:
+    properties:
+      id:
+        type: "integer"
+      course_id:
+        type: "integer"
+      user_id:
+        type: "integer"
+      student_id:
+        type: "string"
+      lab_id:
+        type: "integer"
+  supernode:
+    properties:
+      id:
+        type: "integer"
+      name:
+        type: "integer"
+      labs:
+        type: "array"
+        items:
+          $ref: "#/definitions/lab"
