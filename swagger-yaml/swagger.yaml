@@ -6,6 +6,11 @@ info:
   title: "Academany Management Platform"
 host: "virtserver.swaggerhub.com"
 basePath: "/fibasile/nueval/1.0.0"
+tags:
+- name: "courses"
+  description: "Course management operations"
+- name: "misc"
+  description: "Utility functions"
 schemes:
 - "https"
 security:
@@ -15,6 +20,8 @@ security:
 paths:
   /courses:
     get:
+      tags:
+      - "courses"
       summary: "List courses on the platform"
       description: "This method returns an array of Course objects"
       parameters: []
@@ -26,6 +33,8 @@ paths:
             items:
               $ref: "#/definitions/course"
     post:
+      tags:
+      - "courses"
       summary: "Create a new course on the platform"
       description: "A new Course is created based on the provided parameters"
       parameters:
@@ -40,8 +49,25 @@ paths:
           description: "OK"
         501:
           description: "Missing a key parameter"
+  /courses/{id}:
+    get:
+      summary: "Read a course by ID"
+      description: "A dictionary containing the course information is returned"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Course ID"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "OK"
+        404:
+          description: "Course not found"
   /ping:
     get:
+      tags:
+      - "misc"
       summary: "Server heartbeat operation"
       description: "This operation shows how to override the global security defined\
         \ above, as we want to open it up for all users."
