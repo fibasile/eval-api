@@ -22,8 +22,9 @@ paths:
     get:
       tags:
       - "courses"
-      summary: "List courses on the platform"
+      summary: "List courses"
       description: "This method returns an array of Course objects"
+      operationId: "getCourses"
       parameters: []
       responses:
         200:
@@ -35,8 +36,9 @@ paths:
     post:
       tags:
       - "courses"
-      summary: "Create a new course on the platform"
+      summary: "Create a new course"
       description: "A new Course is created based on the provided parameters"
+      operationId: "createCourse"
       parameters:
       - in: "body"
         name: "course"
@@ -54,12 +56,258 @@ paths:
       tags:
       - "courses"
       summary: "Read a course by ID"
+      operationId: "getCourse"
       parameters:
       - name: "id"
         in: "path"
-        description: "The Course ID"
+        description: "Course ID"
         required: true
-        type: "string"
+        type: "integer"
+      responses:
+        200:
+          description: "OK"
+    post:
+      tags:
+      - "courses"
+      summary: "Update a course by ID"
+      operationId: "updateCourse"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Course ID"
+        required: true
+        type: "integer"
+      - in: "body"
+        name: "course"
+        description: "Course properties"
+        required: false
+        schema:
+          $ref: "#/definitions/course"
+      responses:
+        200:
+          description: "OK"
+    delete:
+      tags:
+      - "courses"
+      summary: "Delete a course by ID"
+      operationId: "deleteCourse"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Course ID"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "OK"
+  /courses/{id}/labs:
+    get:
+      tags:
+      - "courses"
+      summary: "List labs enrolled to a course"
+      description: "This method returns an array of Lab objects"
+      operationId: "getCourseLabs"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Course ID"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/lab"
+    post:
+      tags:
+      - "courses"
+      summary: "Create and enroll a new lab to a course"
+      description: "This method adds a lab to the ones following a course"
+      operationId: "addLabToCourse"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Course ID"
+        required: true
+        type: "integer"
+      - in: "body"
+        name: "lab"
+        description: "Lab properties"
+        required: false
+        schema:
+          $ref: "#/definitions/lab"
+      responses:
+        200:
+          description: "OK"
+  /courses/{id}/labs/{lab_id}:
+    get:
+      tags:
+      - "courses"
+      summary: "Read a lab by ID"
+      description: "This method returns a Lab object"
+      operationId: "getCourseLab"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Course ID"
+        required: true
+        type: "integer"
+      - name: "lab_id"
+        in: "path"
+        description: "Lab ID"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/lab"
+    post:
+      tags:
+      - "courses"
+      summary: "Update a lab by ID"
+      description: "This method allows to update a Lab object"
+      operationId: "updateCourseLab"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Course ID"
+        required: true
+        type: "integer"
+      - name: "lab_id"
+        in: "path"
+        description: "Lab ID"
+        required: true
+        type: "integer"
+      - in: "body"
+        name: "lab"
+        required: true
+        schema:
+          $ref: "#/definitions/lab"
+      responses:
+        200:
+          description: "OK"
+    delete:
+      tags:
+      - "courses"
+      summary: "Delete a lab by ID"
+      description: "This method removes a Lab object, along with all the related objects\
+        \ (students, instructors, gurus, etc)"
+      operationId: "deleteCourseLab"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Course ID"
+        required: true
+        type: "integer"
+      - name: "lab_id"
+        in: "path"
+        description: "Lab ID"
+        required: true
+        type: "integer"
+      - in: "body"
+        name: "lab"
+        required: true
+        schema:
+          $ref: "#/definitions/lab"
+      responses:
+        200:
+          description: "OK"
+  /courses/{id}/labs/{lab_id}/students:
+    post:
+      tags:
+      - "courses"
+      summary: "Create a new student in a course for a lab"
+      description: "This method creates a Student object"
+      operationId: "createCourseStudent"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Course ID"
+        required: true
+        type: "integer"
+      - name: "lab_id"
+        in: "path"
+        description: "Lab ID"
+        required: true
+        type: "integer"
+      - in: "body"
+        name: "student"
+        description: "Student properties"
+        required: true
+        schema:
+          $ref: "#/definitions/student"
+      responses:
+        200:
+          description: "OK"
+  /courses/{id}/students/{student_id}:
+    get:
+      tags:
+      - "courses"
+      summary: "Read a student by ID"
+      description: "This method returns a Student object"
+      operationId: "getCourseStudent"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Course ID"
+        required: true
+        type: "integer"
+      - name: "student_id"
+        in: "path"
+        description: "Student ID"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/student"
+    post:
+      tags:
+      - "courses"
+      summary: "Update a student by ID"
+      description: "This method allows to update a Student object"
+      operationId: "updateCourseStudent"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Course ID"
+        required: true
+        type: "integer"
+      - name: "student_id"
+        in: "path"
+        description: "Student ID"
+        required: true
+        type: "integer"
+      - in: "body"
+        name: "student"
+        required: true
+        schema:
+          $ref: "#/definitions/student"
+      responses:
+        200:
+          description: "OK"
+    delete:
+      tags:
+      - "courses"
+      summary: "Delete a stduent by ID"
+      description: "This method removes a Student object, along with all the related\
+        \ objects (reviews, feedback, progress)"
+      operationId: "deleteCourseStudent"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Course ID"
+        required: true
+        type: "integer"
+      - name: "student_id"
+        in: "path"
+        description: "Student ID"
+        required: true
+        type: "integer"
       responses:
         200:
           description: "OK"
@@ -78,12 +326,27 @@ paths:
 securityDefinitions:
   password:
     type: "oauth2"
-    tokenUrl: "http://api.academany.org/oauth/token"
-    flow: "password"
+    authorizationUrl: "http://api.example.com/api/auth/"
+    flow: "implicit"
     scopes:
       write: "allows modifying resources"
       read: "allows reading resources"
 definitions:
+  lab:
+    required:
+    - "id"
+    - "name"
+    properties:
+      id:
+        type: "integer"
+      name:
+        type: "string"
+      country:
+        type: "string"
+      continent:
+        type: "string"
+      city:
+        type: "string"
   course:
     required:
     - "id"
@@ -97,3 +360,24 @@ definitions:
         type: "integer"
       program:
         type: "string"
+      active:
+        type: "boolean"
+        default: true
+      students:
+        type: "array"
+        items:
+          $ref: "#/definitions/student"
+  student:
+    properties:
+      id:
+        type: "integer"
+      first_name:
+        type: "string"
+      surname:
+        type: "string"
+      email:
+        type: "string"
+      student_id:
+        type: "string"
+      lab_id:
+        type: "integer"
