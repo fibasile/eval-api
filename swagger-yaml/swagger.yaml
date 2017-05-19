@@ -141,6 +141,25 @@ paths:
       responses:
         200:
           description: "OK"
+  /courses/{id}/supernodes/{node_id}:
+    get:
+      summary: "Get a supernode by ID"
+      description: "This method returns a Supernode object"
+      operationId: "getCourseSupernode"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Course ID"
+        required: true
+        type: "integer"
+      - name: "node_id"
+        in: "path"
+        description: "Supernode ID"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "OK"
   /courses/{id}/labs:
     get:
       tags:
