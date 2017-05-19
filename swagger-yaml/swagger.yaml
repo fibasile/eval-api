@@ -49,6 +49,20 @@ paths:
           description: "OK"
         501:
           description: "Missing a key parameter"
+  /courses/{id}:
+    get:
+      tags:
+      - "courses"
+      summary: "Read a course by ID"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "The Course ID"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "OK"
   /ping:
     get:
       tags:
