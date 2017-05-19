@@ -49,12 +49,12 @@ paths:
           description: "OK"
         501:
           description: "Missing a key parameter"
-  /courses/{id}:
+  /courses/{course_id}:
     get:
       summary: "Read a course by ID"
       description: "A dictionary containing the course information is returned"
       parameters:
-      - name: "id"
+      - name: "course_id"
         in: "path"
         description: "Course ID"
         required: true
