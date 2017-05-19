@@ -21,6 +21,10 @@ paths:
       responses:
         200:
           description: "OK"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/course"
     post:
       summary: "Create a new course on the platform"
       description: "A new Course is created based on the provided parameters"
